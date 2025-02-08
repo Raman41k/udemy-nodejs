@@ -1,0 +1,23 @@
+{
+  "name": "noda",
+  "version": "1.0.0",
+  "description": "nodejs",
+  "author": "Romka Gugelok",
+  "license": "MIT",
+  "main": "app.js",
+  "scripts": {
+    "start": "node main",
+    "dev": "nodemon main"
+  },
+  "keywords": [
+    "nodejs",
+    "bootstrap",
+    "express"
+  ],
+  "dependencies": {
+    "express": "^4.16.4"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}
