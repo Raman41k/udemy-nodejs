@@ -20,10 +20,11 @@ function requestHandler(req, res) {
     }
 
     if (url === '/users') {
-        fs.readFile(filePath, function (err, data) {
+        fs.readFile(filePath, 'utf8', function (err, data) {
             if (err) {
-                res.statusCode = 500;
-                return res.end('Error reading users file.');
+                res.statusCode = 301;
+                res.setHeader('Location', '/');
+                res.end();
             }
 
             const users = JSON.parse(data.toString());
@@ -89,12 +90,12 @@ function requestHandler(req, res) {
                     res.statusCode = 500;
                     return res.end('Error saving new user.');
                 }
-
-                res.statusCode = 302;
-                res.setHeader('Location', '/users');
-                res.end();
             });
         });
+
+        res.statusCode = 302;
+        res.setHeader('Location', '/users');
+        res.end();
     }
 }
 
