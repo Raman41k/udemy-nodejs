@@ -1,12 +1,25 @@
-const getHomePage = (req, res, next) => {
-    res.send('Home page');
+const { renderHtml } = require('../helpers/utils')
+
+const getHomePage = (req, res) => {
+    renderHtml(res, 'shop')
 };
 
-const getUsersPage = (req, res, next) => {
-    res.send('Users page')
+const addProductPage = (req, res) => {
+    renderHtml(res, 'add-product')
+};
+
+const addProduct = (req, res) => {
+    console.log(req.body)
+    res.redirect('/');
+}
+
+const get404Page = (req, res) => {
+    renderHtml(res, '404')
 };
 
 module.exports = {
     getHomePage,
-    getUsersPage
+    addProductPage,
+    addProduct,
+    get404Page
 }

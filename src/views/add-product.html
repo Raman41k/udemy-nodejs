@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .main-header {
+            width: 100%;
+            height: 3.5rem;
+            background: #d8cb16;
+            padding: 0 1.5rem;
+        }
+
+        .main-header__nav {
+            height: 100%;
+            display: flex;
+            align-items: center;
+        }
+
+        .main-header__item-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        .main-header__item {
+            margin: 0 1rem;
+            padding: 0;
+        }
+
+        .main-header__item-list a {
+            text-decoration: none;
+            color: white;
+        }
+
+        .main-header__item a:hover,
+        .main-header__item a:active,
+        .main-header__item a.active {
+            color: blue;
+        }
+
+        .product-form {
+            width: 30rem;
+            max-width: 90%;
+            margin: 0 auto;
+        }
+
+        .form-control label,
+        .form-control input{
+            display: block;
+        }
+
+        .form-control input{
+            margin-top: 1rem;
+            border: 1px solid #979736;
+            border-radius: 2px;
+            padding: 0.5rem 1rem;
+        }
+
+        button {
+            border: 1px solid #979736;
+            color: #979736;
+            background: white;
+            border-radius: 2px;
+            cursor: pointer;
+            margin-top: 1rem;
+            padding: 1rem;
+        }
+        
+        button:hover,
+        button:active {
+            background: #6200ff;
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+<header class="main-header">
+    <nav class="main-header__nav">
+        <ul class="main-header__item-list">
+            <li class="main-header__item">
+                <a href="/">Shop</a>
+            </li>
+            <li class="main-header__item">
+                <a href="/admin/add-product" class="active">Add product</a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main>
+    <form class="product-form" method="POST" action="/admin/add-product">
+        <div class="form-control">
+            <label id="title" for="title">
+                <input type="text" name="title" placeholder="Title" required>
+            </label>
+        </div>
+
+        <button type="submit">Add product</button>
+    </form>
+</main>
+</body>
+</html>
