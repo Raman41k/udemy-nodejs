@@ -1,25 +1,37 @@
-const { renderHtml } = require('../helpers/utils')
+const products = [];
 
 const getHomePage = (req, res, next) => {
-    renderHtml(res, 'shop')
+    const url = req.originalUrl;
+    res.render('shop', {
+        documentTitle: 'Shop',
+        products,
+        url
+    });
 };
 
 const addProductPage = (req, res, next) => {
-    renderHtml(res, 'add-product')
+    const url = req.originalUrl;
+    res.render('add-product', {
+        documentTitle: 'Add product',
+        url
+    });
 };
 
 const addProduct = (req, res, next) => {
-    console.log(req.body)
+    products.push({title: req.body.title});
     res.redirect('/');
 }
 
 const get404Page = (req, res, next) => {
-    renderHtml(res, '404')
+    res.render('404', {
+        documentTitle: '404 Not Found'
+    });
 };
 
 module.exports = {
     getHomePage,
     addProductPage,
     addProduct,
-    get404Page
+    get404Page,
+    products,
 }

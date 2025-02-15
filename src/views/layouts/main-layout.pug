@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        if documentTitle
+            title #{documentTitle}
+        link(rel="stylesheet", href="/css/main.css")
+        link(rel="icon", type="image/x-icon", href="/img/icon.png")
+        block head
+    body
+        header.main-header
+            nav.main-header__nav
+                ul.main-header__item-list
+                    li.main-header__item
+                        a(href="/", class=url === '/' ? 'active' : '') Shop
+                    li.main-header__item
+                        a(href="/admin/add-product", class=url === '/admin/add-product' ? 'active' : '') Add product
+        block content
