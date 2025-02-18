@@ -8,11 +8,5 @@ html(lang="en")
         link(rel="icon", type="image/x-icon", href="/img/icon.png")
         block head
     body
-        header.main-header
-            nav.main-header__nav
-                ul.main-header__item-list
-                    li.main-header__item
-                        a(href="/", class=url === '/' ? 'active' : '') Shop
-                    li.main-header__item
-                        a(href="/admin/add-product", class=url === '/admin/add-product' ? 'active' : '') Add product
+        include ../includes/navigation
         block content
