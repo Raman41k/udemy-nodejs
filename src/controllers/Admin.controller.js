@@ -10,7 +10,7 @@ const getProductPage = (req, res, next) => {
 
 const getProductsPage = (req, res, next) => {
     const url = req.originalUrl;
-    res.render('admin/products1', {
+    res.render('admin/products', {
         documentTitle: 'Add product',
         url
     });

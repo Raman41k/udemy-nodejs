@@ -7,6 +7,6 @@ const { getProductPage,
 
 router.get('/add-product', getProductPage);
 router.post('/add-product', postAddProduct);
-router.post('/products', getProductsPage);
+router.get('/products', getProductsPage);
 
 module.exports = router;
