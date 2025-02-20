@@ -41,6 +41,14 @@ const getCartPage = (req, res, next) => {
     });
 }
 
+const getOrdersPage = (req, res, next) => {
+    const url = req.originalUrl;
+    res.render('shop/orders', {
+        documentTitle: 'Orders',
+        url
+    });
+}
+
 const getCheckoutPage = (req, res, next) => {
     const url = req.originalUrl;
     res.render('shop/checkout', {
@@ -54,5 +62,6 @@ module.exports = {
     getIndexPage,
     getProductsPage,
     getCartPage,
-    getCheckoutPage
+    getCheckoutPage,
+    getOrdersPage
 }
