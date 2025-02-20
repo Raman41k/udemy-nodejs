@@ -10,4 +10,13 @@ block content
             .form-control
                 label#title(for="title")
                     input(type="text", name="title", placeholder="Title", required)
+            .form-control
+                label#imageUrl(for="imageUrl")
+                    input(type="text", name="imageUrl", placeholder="Image")
+            .form-control
+                label#price(for="price")
+                    input(type="number", name="price", placeholder="Price", step="0.01", required)
+            .form-control
+                label#description(for="description")
+                    textarea(name="description", placeholder="Description", rows=5, required)
             button(type="submit") Add product

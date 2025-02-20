@@ -1,4 +1,4 @@
-const {Product} = require("../models/Product.model");
+const { Product } = require("../models/Product.model");
 
 const getHomePage = (req, res, next) => {
     const url = req.originalUrl;
@@ -24,10 +24,13 @@ const getIndexPage = (req, res, next) => {
 
 const getProductsPage = (req, res, next) => {
     const url = req.originalUrl;
-    res.render('shop/products', {
-        documentTitle: 'Products',
-        url
-    });
+    Product.fetchAll((products) => {
+        res.render('shop/product-list', {
+            documentTitle: 'Products',
+            url,
+            products
+        });
+    })
 };
 
 const getCartPage = (req, res, next) => {
