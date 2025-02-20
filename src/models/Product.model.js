@@ -15,14 +15,15 @@ const getProductsFromFile = cb => {
 };
 
 class Product {
-    constructor(title, imageUrl = defaultImageUrl, description, price) {
+    constructor(title, imageUrl, description, price) {
         this.title = title;
-        this.imageUrl = imageUrl;
+        this.imageUrl = defaultImageUrl;
         this.description = description;
         this.price = price;
     }
 
     save() {
+        this.id = Date.now().toString(36) + Math.random().toString(36).slice(2, 10);
         getProductsFromFile( (products) => {
             products.push(this);
             fs.writeFile(dataPath, JSON.stringify(products), err => {
@@ -33,6 +34,13 @@ class Product {
 
     static fetchAll(callback) {
         getProductsFromFile(callback);
+    }
+
+    static fetchById(id, callback) {
+        getProductsFromFile(products => {
+            const product = products.find(p => p.id === id);
+            callback(product);
+        });
     }
 }
 
