@@ -2,10 +2,28 @@ const { Product } = require("../models/Product.model");
 
 const getProductPage = (req, res, next) => {
     const url = req.originalUrl;
-    res.render('admin/add-product', {
+    res.render('admin/edit-product', {
         documentTitle: 'Add product',
         url
     });
+};
+
+const getEditProductPage = (req, res, next) => {
+    const url = req.originalUrl;
+    const productId = req.params.productId;
+    const editingMode = req.query.edit;
+
+    if (!editingMode) return res.redirect('/');
+
+    Product.fetchById(productId, product => {
+        console.log(product)
+        res.render('admin/edit-product', {
+            documentTitle: 'Edit product',
+            url,
+            product,
+            editingMode
+        });
+    })
 };
 
 const getProductsPage = (req, res, next) => {
@@ -29,5 +47,6 @@ const postAddProduct = (req, res, next) => {
 module.exports = {
     getProductPage,
     postAddProduct,
-    getProductsPage
+    getProductsPage,
+    getEditProductPage
 }

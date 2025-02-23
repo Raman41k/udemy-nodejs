@@ -57,10 +57,9 @@ const getCartPage = (req, res, next) => {
 
 const postCart = (req, res, next) => {
     const productId = req.body.productId;
-    // Product.fetchById(productId, (product) => {
-    //     console.log(product);
-    //     // Cart.addProduct(productId, product.price)
-    // });
+    Product.fetchById(productId, (product) => {
+        Cart.addProduct(productId, product.price)
+    });
     res.redirect('/cart');
 }
 
