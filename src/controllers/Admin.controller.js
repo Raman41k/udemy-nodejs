@@ -16,7 +16,7 @@ const getEditProductPage = (req, res, next) => {
     if (!editingMode) return res.redirect('/');
 
     Product.fetchById(productId, product => {
-        console.log(product)
+        if (!product) return res.redirect('/');
         res.render('admin/edit-product', {
             documentTitle: 'Edit product',
             url,
@@ -25,6 +25,20 @@ const getEditProductPage = (req, res, next) => {
         });
     })
 };
+
+const postEditProduct = (req, res, next) => {
+    const { product_id, title, imageUrl, price, description } = req.body;
+    const updatedProduct = new Product(product_id, title, imageUrl, description, price);
+    updatedProduct.update();
+    res.redirect('/admin/products');
+};
+
+const deleteProduct = (req, res, next) => {
+    const { product_id } = req.body;
+    const deletedProduct = new Product(product_id);
+    deletedProduct.delete();
+    res.redirect('/admin/products');
+}
 
 const getProductsPage = (req, res, next) => {
     const url = req.originalUrl;
@@ -39,7 +53,7 @@ const getProductsPage = (req, res, next) => {
 
 const postAddProduct = (req, res, next) => {
     const { title, imageUrl, price, description } = req.body;
-    const product = new Product(title, imageUrl, description, price);
+    const product = new Product(null, title, imageUrl, description, price);
     product.save();
     return res.redirect('/');
 };
@@ -48,5 +62,7 @@ module.exports = {
     getProductPage,
     postAddProduct,
     getProductsPage,
-    getEditProductPage
+    getEditProductPage,
+    postEditProduct,
+    deleteProduct
 }

@@ -6,17 +6,19 @@ block head
 
 block content
     main
-        form.product-form(method="POST", action="/admin/add-product")
+        form.product-form(method="POST", action=`/admin/${editingMode ? 'edit-product/' : 'add-product'}`)
             .form-control
                 label#title(for="title")
-                    input(type="text", name="title", placeholder="Title", required)
+                    input(type="text", name="title", placeholder="Title" value=editingMode ? product.title : '')
             .form-control
                 label#imageUrl(for="imageUrl")
-                    input(type="text", name="imageUrl", placeholder="Image")
+                    input(type="text", name="imageUrl", placeholder="Image" value=editingMode ? product.imageUrl : '')
             .form-control
                 label#price(for="price")
-                    input(type="number", name="price", placeholder="Price", step="0.01", required)
+                    input(type="number", name="price", placeholder="Price", step="0.01" value=editingMode ? product.price : '')
             .form-control
                 label#description(for="description")
-                    textarea(name="description", placeholder="Description", rows=5, required)
-            button(type="submit") Add product
+                    textarea(name="description", placeholder="Description", rows=5)= editingMode ? product.description : ''
+            if editingMode
+                input(type="hidden" value=product.id name='product_id')
+            button(type="submit").btn #{editingMode ? "Update Product" : "Add Product"}
