@@ -6,6 +6,7 @@ const app = express();
 const shopRouter = require('./src/routes/Shop.routes');
 const adminRouter = require('./src/routes/Admin.routes');
 const appRouter = require('./src/routes/App.routes');
+const sequelize = require('./src/util/database');
 
 app.set("view engine", "pug");
 app.set("views", path.join(__dirname, '..', "app/src/views/"));
@@ -17,7 +18,13 @@ app.use('/admin', adminRouter);
 app.use(shopRouter);
 app.use(appRouter);
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`App listening on port ${PORT}`);
-});
+sequelize.sync()
+    .then(result => {
+        const PORT = process.env.PORT || 3000;
+        app.listen(PORT, () => {
+            console.log(`App listening on port ${PORT}`);
+        });
+    })
+    .catch(err => {
+        console.log(err);
+    })
