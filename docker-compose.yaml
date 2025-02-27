@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   backend:
     build:
@@ -13,6 +11,25 @@ services:
     networks:
       - app-network
     command: "npm run dev"
+    depends_on:
+      database:
+        condition: service_healthy
+  database:
+    image: mysql:latest
+    restart: always
+    env_file: ".env"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      - "${MYSQL_PORT}:3306"
+    networks:
+      - app-network
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      timeout: 1s
+      retries: 5
 networks:
   app-network:
     driver: bridge
