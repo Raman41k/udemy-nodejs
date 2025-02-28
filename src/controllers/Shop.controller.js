@@ -1,67 +1,59 @@
-const { Product } = require("../models/Product.model");
+const Product = require("../models/Product.model");
 const { Cart } = require("../models/Cart.model");
 
 const getHomePage = (req, res, next) => {
     const url = req.originalUrl;
-    Product.fetchAll()
-        .then(([rows, fieldData]) => {
-            console.log(rows);
-            res.render('shop/product-list', {
-                documentTitle: 'Shop',
-                url,
-                products: rows
-            });
-        })
-        .catch(err => {
-            console.log(err)
+    Product.findAll().then(products => {
+        res.render('shop/product-list', {
+            documentTitle: 'Shop',
+            url,
+            products
         });
+    }).catch((err) => {
+        console.log(err)
+    })
 };
 
 const getIndexPage = (req, res, next) => {
     const url = req.originalUrl;
-    Product.fetchAll()
-        .then(([rows, fieldData]) => {
-            res.render('shop/index', {
-                documentTitle: 'Shop',
-                url,
-                products: rows
-            });
-        })
-        .catch(err => {
-            console.log(err)
-        })
+    Product.findAll().then(products => {
+        res.render('shop/product-list', {
+            documentTitle: 'Shop',
+            url,
+            products
+        });
+    }).catch((err) => {
+        console.log(err)
+    });
 }
 
 const getProductsPage = (req, res, next) => {
     const url = req.originalUrl;
-    Product.fetchAll()
-        .then(([products, fieldData]) => {
-            res.render('shop/product-list', {
-                documentTitle: 'Products',
-                url,
-                products
-            })
-        })
-        .catch(err => {
-            console.log(err)
-        })
+    Product.findAll().then(products => {
+        res.render('shop/index', {
+            documentTitle: 'Products',
+            url,
+            products
+        });
+    }).catch((err) => {
+        console.log(err)
+    });
 };
 
 const getProductPage = (req, res, next) => {
     const url = req.originalUrl;
     const productId = req.params.productId;
 
-    Product.fetchById(productId)
-        .then(([product, fieldData]) => {
-            res.render('shop/product-details', {
-                documentTitle: 'Product:' + product[0].title,
-                url,
-                product: product[0]
-            });
-        })
-        .catch(err => {
-            console.log(err)
-        })
+    Product.findByPk(productId)
+        .then(product => {
+        res.render('shop/product-details', {
+            documentTitle: 'Product:' + product.title,
+            url,
+            product
+        });
+    }).catch((err) => {
+        console.log(err)
+    })
 };
 
 const getCartPage = (req, res, next) => {
