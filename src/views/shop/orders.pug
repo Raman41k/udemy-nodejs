@@ -1,1 +1,17 @@
 extends ../layouts/main-layout
+
+block head
+    link(rel="stylesheet", href="/css/product.css")
+
+block content
+    main
+        h1(style="text-align:center") Orders details
+        if orders.length > 0
+            .grid
+                each order in orders
+                    h1 #{order.id}
+                    ul
+                         each product in order.products
+                             li #{product.title} - #{product.price}$ (#{product.orderItem.quantity})
+        else
+            h1 No orders details

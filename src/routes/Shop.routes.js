@@ -8,15 +8,18 @@ const { getIndexPage,
     getOrdersPage,
     getProductPage,
     postCart,
-    postDeleteItemFromCart} = require('../controllers/Shop.controller');
+    postDeleteItemFromCart,
+    postOrder} = require('../controllers/Shop.controller');
 
 router.get('/', getIndexPage);
 router.get('/products', getProductsPage);
 router.get('/products/:productId', getProductPage);
 router.get('/cart', getCartPage);
-router.post('/cart', postCart);
-router.post('/cart-delete-item', postDeleteItemFromCart);
 router.get('/orders', getOrdersPage);
 router.get('/checkout', getCheckoutPage);
+
+router.post('/cart', postCart);
+router.post('/cart-delete-item', postDeleteItemFromCart);
+router.post('/create-order', postOrder);
 
 module.exports = router;

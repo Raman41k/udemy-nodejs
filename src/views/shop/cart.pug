@@ -5,6 +5,7 @@ block head
 
 block content
     main
+        h1(style="text-align:center") Cart
         if products.length > 0
             .grid
                 each product in products
@@ -16,10 +17,13 @@ block content
                         div.card__content
                             h2.product__price $#{product.price}
                             p.product__description #{product.description}
-                            p.product__description Count: #{product.quantity}
+                            p.product__description Count: #{product.cartItem.quantity}
                         .card__actions
                             form(action="/cart-delete-item" method="POST")
                                 input(type="hidden" value=product.id name="product_id")
                                 button(type="submit").btn Delete from cart
+            hr
+            form(action="/create-order" method="POST" style="text-align: center")
+                button(type="submit").btn Order
         else
             h1 No Products
