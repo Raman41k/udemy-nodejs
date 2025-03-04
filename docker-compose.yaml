@@ -12,24 +12,21 @@ services:
       - app-network
     command: "npm run dev"
     depends_on:
-      database:
-        condition: service_healthy
-  database:
-    image: mysql:latest
+      - mongodb
+  mongodb:
+    image: mongo
+    container_name: mongodb
     restart: always
-    env_file: ".env"
+    env_file:
+      - .env
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-    ports:
-      - "${MYSQL_PORT}:3306"
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
     networks:
       - app-network
-    healthcheck:
-      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
-      timeout: 1s
-      retries: 5
+    ports:
+      - "27017:27017"
+    command: ["mongod", "--auth"]
 networks:
   app-network:
     driver: bridge

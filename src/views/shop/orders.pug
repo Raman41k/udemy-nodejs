@@ -9,9 +9,9 @@ block content
         if orders.length > 0
             .grid
                 each order in orders
-                    h1 #{order.id}
+                    h1 #{order._id}
                     ul
                          each product in order.products
-                             li #{product.title} - #{product.price}$ (#{product.orderItem.quantity})
+                             li Name: #{product.title} - price: #{product.price}$ (#{product.quantity} quantity)
         else
             h1 No orders details
