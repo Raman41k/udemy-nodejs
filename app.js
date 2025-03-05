@@ -1,6 +1,8 @@
+require('dotenv').config();
 const express =  require('express');
 const path = require("path");
 const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
 
 const PORT = process.env.PORT || 3000;
 const app = express();
@@ -10,14 +12,12 @@ const appRouter = require('./src/routes/App.routes');
 
 const User = require('./src/models/User.model');
 
-const { mongoConnect } = require('./src/util/database');
-
 app.set("view engine", "pug");
 app.set("views", path.join(__dirname, '..', "app/src/views/"));
 
 app.use((req, res, next) => {
-    User.getById('67c59a128553396ef967d42a').then(user => {
-        req.user = new User(user.usermame, user.email, user.cart, user._id);
+    User.findById('67c813e581a85165a32bf64e').then(user => {
+        req.user = user;
         next();
     }).catch(err => {
         console.log(err);
@@ -31,6 +31,8 @@ app.use('/admin', adminRouter);
 app.use(shopRouter);
 app.use(appRouter);
 
-mongoConnect(() => {
+mongoose.connect(`mongodb://${process.env.MONGO_INITDB_ROOT_USERNAME}:${process.env.MONGO_INITDB_ROOT_PASSWORD}@mongodb:27017/${process.env.MONGO_INITDB_DATABASE}?authSource=admin`).then(result => {
     app.listen(PORT);
+}).catch(err => {
+    console.log('Error connecting to MongoDB', err);
 });

@@ -11,16 +11,16 @@ block content
                 each product in products
                     article.card.product-item
                         header.card__header
-                            h1.product__title #{product.title}
+                            h1.product__title #{product.productId.title}
                         div.card__image
-                            img(src=product.imageUrl, alt=product.title)
+                            img(src=product.productId.imageUrl, alt=product.productId.title)
                         div.card__content
-                            h2.product__price $#{product.price}
-                            p.product__description #{product.description}
+                            h2.product__price $#{product.productId.price}
+                            p.product__description #{product.productId.description}
                             p.product__description Count: #{product.quantity}
                         .card__actions
                             form(action="/cart-delete-item" method="POST")
-                                input(type="hidden" value=product._id name="product_id")
+                                input(type="hidden" value=product.productId._id name="product_id")
                                 button(type="submit").btn Delete from cart
             hr
             form(action="/create-order" method="POST" style="text-align: center")

@@ -15,7 +15,7 @@ const getEditProductPage = (req, res, next) => {
 
     if (!editingMode) return res.redirect('/');
 
-    Product.getProductById(productId)
+    Product.findById(productId)
         .then(product => {
             res.render('admin/edit-product', {
                 documentTitle: 'Edit product',
@@ -31,31 +31,32 @@ const getEditProductPage = (req, res, next) => {
 
 const postEditProduct = (req, res, next) => {
     const {product_id, title, imageUrl, price, description} = req.body;
-    const updatedProduct = new Product(title, price, imageUrl, description)
-    updatedProduct.update(product_id)
-        .then(product => {
-            res.redirect('/admin/products');
-        })
-        .catch((err) => {
-            console.log(err);
-        })
+    Product.findByIdAndUpdate(product_id, {
+        $set: {
+            title,
+            price,
+            description,
+            imageUrl,
+        }
+    }).then(() => {
+        res.redirect('/admin/products');
+    }).catch(err => {
+        console.log('Error by updating product', err);
+    })
 };
 
 const deleteProduct = (req, res, next) => {
     const {product_id} = req.body;
-    const deletedProduct = new Product();
-    deletedProduct.delete(product_id)
-        .then(product => {
-            res.redirect('/admin/products');
-        })
-        .catch((err) => {
-            console.log(err);
-        })
+    Product.findByIdAndDelete(product_id).then(() => {
+        res.redirect('/admin/products');
+    }).catch(err => {
+        console.log(err);
+    })
 }
 
 const getProductsPage = (req, res, next) => {
     const url = req.originalUrl;
-    Product.getProducts()
+    Product.find()
         .then(products => {
             res.render('admin/products', {
                 documentTitle: 'Add product',
@@ -71,13 +72,13 @@ const getProductsPage = (req, res, next) => {
 const postAddProduct = (req, res, next) => {
     const { title, imageUrl, price, description } = req.body;
     const user = req.user;
-    const product = new Product(title, price, imageUrl, description, user._id);
+    const product = new Product({title, price, description, imageUrl, userId: user._id});
     product.save()
         .then(product => {
             res.redirect('/admin/products');
         })
         .catch(err => {
-            console.log(err);
+            console.log('Error to create product', err);
         })
 };
 
