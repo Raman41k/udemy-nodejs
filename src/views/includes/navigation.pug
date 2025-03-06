@@ -5,11 +5,20 @@ header.main-header
                 a(href="/", class=url === '/' ? 'active' : '') Shop
             li.main-header__item
                 a(href="/products", class=url === '/products' ? 'active' : '') Products
-            li.main-header__item
-                a(href="/cart", class=url === '/cart' ? 'active' : '') Cart
-            li.main-header__item
-                a(href="/orders", class=url === '/orders' ? 'active' : '') Orders
-            li.main-header__item
-                a(href="/admin/add-product", class=url === '/admin/add-product' ? 'active' : '') Add product
-            li.main-header__item
-                a(href="/admin/products", class=url === '/admin/products' ? 'active' : '') Admin products
+            if  isAuthenticated
+                li.main-header__item
+                    a(href="/cart", class=url === '/cart' ? 'active' : '') Cart
+                li.main-header__item
+                    a(href="/orders", class=url === '/orders' ? 'active' : '') Orders
+                li.main-header__item
+                    a(href="/admin/add-product", class=url === '/admin/add-product' ? 'active' : '') Add product
+                li.main-header__item
+                    a(href="/admin/products", class=url === '/admin/products' ? 'active' : '') Admin products
+        ul.main-header__item-list
+            if !isAuthenticated
+                li.main-header__item
+                    a(href="/login", class=url === '/login' ? 'active' : '') Login
+            if isAuthenticated
+                li.main-header__item
+                    form(action="/logout" method="post")
+                        button(type="submit").btn Logout

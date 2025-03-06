@@ -2,9 +2,11 @@ const Product = require("../models/Product.model");
 
 const getProductPage = (req, res, next) => {
     const url = req.originalUrl;
+
     res.render('admin/edit-product', {
         documentTitle: 'Add product',
-        url
+        url,
+        isAuthenticated: req.session.isLoggedIn
     });
 };
 
@@ -21,7 +23,8 @@ const getEditProductPage = (req, res, next) => {
                 documentTitle: 'Edit product',
                 url,
                 product,
-                editingMode
+                editingMode,
+                isAuthenticated: req.session.isLoggedIn
             });
         })
         .catch((err) => {
@@ -56,12 +59,14 @@ const deleteProduct = (req, res, next) => {
 
 const getProductsPage = (req, res, next) => {
     const url = req.originalUrl;
+
     Product.find()
         .then(products => {
             res.render('admin/products', {
                 documentTitle: 'Add product',
                 url,
-                products
+                products,
+                isAuthenticated: req.session.isLoggedIn
             });
         })
         .catch((err) => {

@@ -3,11 +3,13 @@ const Order = require("../models/Order.model");
 
 const getHomePage = (req, res, next) => {
     const url = req.originalUrl;
+
     Product.find().then(products => {
         res.render('shop/product-list', {
             documentTitle: 'Shop',
             url,
-            products
+            products,
+            isAuthenticated: req.session.isLoggedIn
         });
     }).catch((err) => {
         console.log(err)
@@ -16,11 +18,13 @@ const getHomePage = (req, res, next) => {
 
 const getIndexPage = (req, res, next) => {
     const url = req.originalUrl;
+
     Product.find().then(products => {
         res.render('shop/product-list', {
             documentTitle: 'Shop',
             url,
-            products
+            products,
+            isAuthenticated: req.session.isLoggedIn
         });
     }).catch((err) => {
         console.log(err)
@@ -29,6 +33,7 @@ const getIndexPage = (req, res, next) => {
 
 const getProductsPage = (req, res, next) => {
     const url = req.originalUrl;
+
     Product.find()
         // .select('title price -_id description imageUrl')
         // .populate('userId')
@@ -36,7 +41,8 @@ const getProductsPage = (req, res, next) => {
         res.render('shop/index', {
             documentTitle: 'Products',
             url,
-            products
+            products,
+            isAuthenticated: req.session.isLoggedIn
         });
     }).catch((err) => {
         console.log(err)
@@ -52,7 +58,8 @@ const getProductPage = (req, res, next) => {
             res.render('shop/product-details', {
                 documentTitle: 'Product:' + product.title,
                 url,
-                product
+                product,
+                isAuthenticated: req.session.isLoggedIn
             });
         })
         .catch(err => {
@@ -62,13 +69,15 @@ const getProductPage = (req, res, next) => {
 
 const getCartPage = (req, res, next) => {
     const url = req.originalUrl;
+
     req.user
         .populate('cart.products.productId')
         .then((user) => {
         res.render('shop/cart', {
             documentTitle: 'Cart',
             url,
-            products: user.cart.products
+            products: user.cart.products,
+            isAuthenticated: req.session.isLoggedIn
         })
     }).catch(err => {
         console.log(err);
@@ -97,9 +106,11 @@ const postDeleteItemFromCart = (req, res, next) => {
 
 const getCheckoutPage = (req, res, next) => {
     const url = req.originalUrl;
+
     res.render('shop/checkout', {
         documentTitle: 'Checkout',
-        url
+        url,
+        isAuthenticated: req.session.isLoggedIn
     });
 };
 
@@ -136,11 +147,13 @@ const postOrder = (req, res, next) => {
 
 const getOrdersPage = (req, res, next) => {
     const url = req.originalUrl;
+
     Order.find({"user.userId": req.user.id}).then(orders => {
         res.render('shop/orders', {
             documentTitle: 'Orders',
             url,
-            orders
+            orders,
+            isAuthenticated: req.session.isLoggedIn
         });
     }).catch(err => {
         console.log(err)
